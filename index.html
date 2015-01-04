@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Home work 6</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+<div class="container">
+    <H1 class="text-center"> Form validation Homework </H1>
+    <p class="validation-result"></p>
+    <form action="" name="form-validation">
+        <div class="form-field">
+            <label for="email_valid_text">Email:</label>
+            <input type="text" id="email_valid_text" name="email-validation" placeholder="Email" class="input-f">
+            <span>Email not valid</span>
+        </div>
+        <div class="form-field">
+            <label for="name_valid_text">Name:</label>
+            <input type="text" id="name_valid_text" name="name-validation" placeholder="Name" class="input-f">
+            <span>Name not should be blank</span>
+        </div>
+        <div class="form-field">
+            <label for="check_validation">Check:</label>
+            <input type="checkbox" name="check-validation" id="check_validation">
+            <span>Checkbox must be checked</span>
+        </div>
+        <div class="form-field">
+            <input type="submit" name="form-validation-submit" value="Check form" id="validation_submit_form_btn" class="btn">
+        </div>
+    </form>
+
+    <hr>
+
+    <div class="wrapper">
+        <H1 class="text-center"> Todo Homework </H1>
+
+        <div class="text-center">
+            <input type="text" id="todo_text_field" name="todo-wish" placeholder="Todo wish" class="input-f">
+        </div>
+        <H2 class="text-center">Todo list:</H2>
+
+        <ul id="todo_ul_list">
+        </ul>
+
+        <hr class="hr">
+        <input type="checkbox" id="select_all_chk" style="margin-bottom: 15px;">
+        <label for="select_all_chk">Select all</label><p id="summary_chk" class="summary-info"> Selected: 0 Total: 0 </p>
+        <input type="button" value="Remove selected items" id="delete_selected_li" class="summary-info btn">
+    </div>
+
+</div>
+
+<script src="js/hw6-validation.js"></script>
+<script src="js/hw6-todo.js"></script>
+</body>
+</html>
