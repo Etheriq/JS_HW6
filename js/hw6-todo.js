@@ -30,7 +30,7 @@ document.getElementById('todo_text_field').addEventListener('keypress', function
             });
             inputText.type = 'text';
             inputText.classList.add('input-f');
-            inputText.value = e.target.textContent;
+            inputText.value = span.textContent;
             span.classList.add('no-display');
             span.parentNode.appendChild(inputText);
 
