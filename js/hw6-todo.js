@@ -1,8 +1,11 @@
 var ulList = document.getElementById('todo_ul_list');
 var selectAll = document.getElementById('select_all_chk');
 var  summaryResult = document.getElementById('summary_chk');
-document.getElementById('todo_text_field').addEventListener('keypress', function(e) {
-    if (e.keyCode === 13 && e.target.value) {
+var filter = document.getElementById('tod_filter');
+var input = document.getElementById('todo_text_field');
+
+input.addEventListener('keyup', function(e) {
+    if (e.keyCode === 13 && e.target.value && filter.checked === false) {
         var chkBox = document.createElement('input');
         var li = document.createElement('li');
         var span = document.createElement('span');
@@ -43,6 +46,25 @@ document.getElementById('todo_text_field').addEventListener('keypress', function
         ulList.appendChild(li);
         showSelectedUnselected(ulList);
     }
+
+    if (filter.checked === true) {
+        var filteredSpan = ulList.querySelectorAll('li > span');
+        filteredSpan.filter(function(el){
+            if (el.textContent.toLowerCase().search(e.target.value) != -1) {
+                el.parentNode.classList.add('filtered');
+            } else {
+                el.parentNode.classList.remove('filtered');
+            }
+        });
+    }
+});
+
+filter.addEventListener('click', function(){
+    var li = ulList.querySelectorAll('li');
+
+    li.forEach(function(el){
+        el.classList.remove('filtered');
+    });
 });
 
 function showSelectedUnselected(ul)
@@ -82,4 +104,7 @@ document.getElementById('delete_selected_li').addEventListener('click', function
 
 NodeList.prototype.forEach = function (f) {
     Array.prototype.forEach.call(this, f);
+};
+NodeList.prototype.filter = function (f) {
+    Array.prototype.filter.call(this, f);
 };
