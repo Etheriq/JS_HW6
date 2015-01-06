@@ -98,7 +98,11 @@ document.getElementById('delete_selected_li').addEventListener('click', function
     var selectedLi = ulList.querySelectorAll('li.selected-li');
 
     selectedLi.forEach(function(el){
-        el.remove();
+        if (el.remove) {
+            el.remove();
+        } else {
+            el.parentNode.removeChild(el);
+        }
     });
 
     selectAll.checked = false;
