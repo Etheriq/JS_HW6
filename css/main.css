@@ -132,3 +132,10 @@ input[type=checkbox].chk-li {
 .no-display {
     display: none;
 }
+li.filtered {
+    margin: 4px 0;
+}
+.filtered span{
+    padding: 2px 4px;
+    border: 2px solid green;
+}
