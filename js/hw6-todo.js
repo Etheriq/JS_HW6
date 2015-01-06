@@ -56,6 +56,7 @@ input.addEventListener('keyup', function(e) {
                 el.parentNode.classList.remove('filtered');
             }
         });
+        showSelectedUnselected(ulList);
     }
 });
 
@@ -65,14 +66,16 @@ filter.addEventListener('click', function(){
     li.forEach(function(el){
         el.classList.remove('filtered');
     });
+    showSelectedUnselected(ulList);
 });
 
 function showSelectedUnselected(ul)
 {
     var totalLi = ul.querySelectorAll('li');
     var selectedLi = ul.querySelectorAll('li.selected-li');
+    var filteredLi = ul.querySelectorAll('li.filtered');
 
-    summaryResult.innerText = 'Selected: ' + selectedLi.length + ' Total: ' + totalLi.length;
+    summaryResult.innerHTML = '<b>Selected:</b> ' + selectedLi.length + ' <b>Filtered:</b> '+ filteredLi.length +' <b>Total:</b> ' + totalLi.length;
 }
 
 selectAll.addEventListener('change', function(e){
