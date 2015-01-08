@@ -17,7 +17,7 @@ function emailValidation(field, submitBtn) {
 }
 
 function nameValidation(field, submitBtn) {
-    if (field.value === '') {
+    if (field.value === '' || field.value.length > 6) {
         field.classList.add('error');
         //submitBtn.disabled = true;
     } else {
