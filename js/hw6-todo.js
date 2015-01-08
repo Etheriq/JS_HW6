@@ -31,11 +31,17 @@ input.addEventListener('keyup', function(e) {
                     span.classList.remove('no-display');
                 }
             });
+            inputText.addEventListener('focusout', function (e) {
+                span.textContent = e.target.value;
+                span.parentNode.removeChild(e.target);
+                span.classList.remove('no-display');
+            });
             inputText.type = 'text';
             inputText.classList.add('input-f');
             inputText.value = span.textContent;
             span.classList.add('no-display');
             span.parentNode.appendChild(inputText);
+            inputText.focus();
 
         });
         li.appendChild(chkBox);
