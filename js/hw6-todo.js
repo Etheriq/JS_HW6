@@ -86,7 +86,7 @@ input.addEventListener('keyup', function(e) {
                         span.classList.remove('no-display');
                     }
                 });
-                inputText.addEventListener('focusout', function (e) {
+                inputText.addEventListener('blur', function (e) {
                     span.textContent = e.target.value;
                     span.parentNode.removeChild(e.target);
                     span.classList.remove('no-display');
