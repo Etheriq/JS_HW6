@@ -4,71 +4,65 @@ var summaryResult = document.getElementById('summary_chk');
 var filter = document.getElementById('tod_filter');
 var input = document.getElementById('todo_text_field');
 
-//var dragEl = null;
-//
-//function handleDragStart(e) {
-//    this.style.opacity = '0.4';
-//
-//    dragEl = this;
-//    e.dataTransfer.effectAllowed = 'move';
-//    e.dataTransfer.setData('text/html', this.innerHTML);
-//    console.log('drag start');
-//    console.dir(this);
-//    //return false;
-//}
-//
-//function handleDrop(e) {
-//
-//    if (e.stopPropagation) {
-//        e.stopPropagation();
-//    }
-//
-//    //e.target.appendChild(e.dataTransfer.getData('text/html'));
-//    //ulList.appendChild(e.dataTransfer.getData('text'));
-//
-//    if (dragEl != this) {
-//        //dragEl.innerHTML = this.innerHTML;
-//        this.innerHTML = e.dataTransfer.getData('text/html');
-//    }
-//
-//    console.log('drag end');
-//    console.dir(e.dataTransfer);
-//
-//    return false;
-//}
-//
-//function handleDragEnd(e) {
-//
-//    this.style.opacity = '1';
-//    var li = ulList.querySelectorAll('li');
-//
-//    li.forEach(function (li) {
-//        li.classList.remove('over');
-//    });
-//}
-//
-//function handleDragOver(e) {
-//    if (e.preventDefault) {
-//        e.preventDefault();
-//    }
-//
-//    e.dataTransfer.dropEffect = 'move';
-//
-//    return false;
-//}
-//
-//function handleDragEnter(e) {
-//    this.classList.add('over');
-//}
-//
-//function handleDragLeave(e) {
-//    this.classList.remove('over');
-//}
+function handleDragStart(e) {
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('Text', e.target.getAttribute('id'));
+
+    return false;
+}
+
+function handleDrop(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+
+    var data = e.dataTransfer.getData('Text');
+    e.target.appendChild(document.getElementById(data));
+
+    return false;
+}
+
+function handleDragEnd(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    var li = ulList.querySelectorAll('li');
+
+    li.forEach(function (li) {
+        li.classList.remove('over');
+    });
+
+    return false;
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+
+    return false;
+}
+
+function handleDragEnter(e) {
+    this.classList.add('over');
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+
+    return false;
+}
+
+function handleDragLeave(e) {
+    this.classList.remove('over');
+}
 
 input.addEventListener('keyup', function(e) {
     if (e.keyCode === 13 && e.target.value && filter.checked === false) {
-        var chkBox = document.createElement('input');
         var li = document.createElement('li');
+        var chkBox = document.createElement('input');
         var span = document.createElement('span');
 
         chkBox.type = 'checkbox';
@@ -85,18 +79,18 @@ input.addEventListener('keyup', function(e) {
         span.addEventListener('click', function(e){
             var inputText = document.createElement('input');
             var span = e.target;
-            inputText.addEventListener('keypress', function(e){
-                if (e.keyCode == 13 && e.target.value) {
+                inputText.addEventListener('keyup', function(e){
+                    if (e.keyCode == 13 && e.target.value) {
+                        span.textContent = e.target.value;
+                        span.parentNode.removeChild(e.target);
+                        span.classList.remove('no-display');
+                    }
+                });
+                inputText.addEventListener('focusout', function (e) {
                     span.textContent = e.target.value;
                     span.parentNode.removeChild(e.target);
                     span.classList.remove('no-display');
-                }
-            });
-            inputText.addEventListener('focusout', function (e) {
-                span.textContent = e.target.value;
-                span.parentNode.removeChild(e.target);
-                span.classList.remove('no-display');
-            });
+                });
             inputText.type = 'text';
             inputText.classList.add('input-f');
             inputText.value = span.textContent;
@@ -106,17 +100,18 @@ input.addEventListener('keyup', function(e) {
 
         });
         li.appendChild(chkBox);
-        span.innerHTML = e.target.value;
+        span.innerText = e.target.value;
         li.appendChild(span);
+        li.setAttribute('id', 'li-' + guid());
 
-            //li.draggable = true;
-            //
-            //li.addEventListener('dragstart', handleDragStart, false);
-            //li.addEventListener('dragenter', handleDragEnter, false);
-            //li.addEventListener('dragover', handleDragOver, false);
-            //li.addEventListener('dragleave', handleDragLeave, false);
-            //li.addEventListener('drop', handleDrop, false);
-            //li.addEventListener('dragend', handleDragEnd, false);
+            li.draggable = true;
+
+            li.addEventListener('dragstart', handleDragStart, false);
+            li.addEventListener('dragenter', handleDragEnter, false);
+            li.addEventListener('dragover', handleDragOver, false);
+            li.addEventListener('dragleave', handleDragLeave, false);
+            li.addEventListener('drop', handleDrop, false);
+            li.addEventListener('dragend', handleDragEnd, false);
 
         //li.contentEditable = true;
         e.target.value = '';
@@ -185,6 +180,18 @@ document.getElementById('delete_selected_li').addEventListener('click', function
     selectAll.checked = false;
     showSelectedUnselected(ulList);
 });
+
+var guid = (function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return function() {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
+})();
 
 NodeList.prototype.forEach = function (f) {
     Array.prototype.forEach.call(this, f);
